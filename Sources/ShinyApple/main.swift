@@ -16,20 +16,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with ShinyApple.  If not, see <https://www.gnu.org/licenses/>.
 */
-import Commander
 
+// docker
+print("Cleaning up Docker")
+dockerCleanup()
 
-command() {
-	// docker
-	print("Cleaning up Docker")
-	dockerCleanup()
+// brew
+print("Cleaning up Brew")
+brewCleanup()
 
-	// brew
-	print("Cleaning up Brew")
-	brewCleanup()
-
-	// cleanup memory
-	print("Cleaning up memory")
-	memoryCleanup()
-}.run()
+// cleanup memory
+print("Cleaning up memory")
+memoryCleanup()
 

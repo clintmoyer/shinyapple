@@ -25,12 +25,8 @@ let package = Package(
 	platforms: [
         .macOS(.v10_13)
     ],
-    dependencies: [
-        .package(url: "https://github.com/kylef/Commander.git", from: "0.9.1"),
-    ],
     targets: [
         .target(
             name: "ShinyApple",
-            dependencies: ["Commander"]),
     ]
 )
