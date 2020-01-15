@@ -20,7 +20,12 @@ import Foundation
 
 
 // use MacOS purge tool
-func purgeMemory() {
+func memoryCleanup() {
+	if !checkRoot() {
+		print("Not running as root")
+		return
+	}
+
 	let task = Process()
 
 	task.executableURL = URL(fileURLWithPath: "/usr/sbin/purge")
@@ -31,5 +36,14 @@ func purgeMemory() {
 	}
 
 	task.waitUntilExit()
+}
+
+// check if running as root
+func checkRoot() -> Bool {
+	if geteuid() == 0 {
+		return true
+	} else {
+		return false
+	}
 }
 

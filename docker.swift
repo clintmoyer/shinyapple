@@ -22,6 +22,15 @@ import Foundation
 let dockerRuntime = "/usr/local/bin/docker"
 
 
+func dockerCleanup() {
+	checkDocker()
+	let containers = getContainers()
+	for container in containers {
+		removeContainer(container: container)
+	}
+}
+
+
 // warn us when Docker is not present
 func checkDocker() {
 	let fileManager = FileManager.default

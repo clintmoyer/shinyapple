@@ -19,17 +19,13 @@ along with ShinyApple.  If not, see <https://www.gnu.org/licenses/>.
 
 // docker
 print("Cleaning up Docker")
-checkDocker()
-let containers = getContainers()
-for container in containers {
-	removeContainer(container: container)
-}
+dockerCleanup()
 
 // brew
 print("Cleaning up Brew")
-brewCleanup()
+/*brewCleanup()*/
 
 // cleanup memory
 print("Cleaning up memory")
-purgeMemory()
+memoryCleanup()
 
