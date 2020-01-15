@@ -46,9 +46,17 @@ let data = pipe.fileHandleForReading.readDataToEndOfFile()
 let output = String(data: data, encoding: String.Encoding.utf8)!
 let lines = output.split { $0.isNewline }
 
+// remove each container
+//
+// typically this clears data from /var/lib/docker/containers/
+// MacOS kernel cannot run Docker natively, instead using a VM
+// under $HOME/Library/Containers/com.docker.docker/Data
+//
+// ultimately this reduces the footprint of the Docker Machine
+
 for container in lines {
-	print(container)
 	task = Process()
+	task.executableURL = URL(fileURLWithPath: dockerRuntime)
 	task.arguments = ["rm", String(container)]
 	do {
 		try task.run()
