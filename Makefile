@@ -16,3 +16,6 @@
 # along with ShinyApple.  If not, see <https://www.gnu.org/licenses/>.
 build:
 	swift build -c release
+
+install:
+	cp ./.build/release/ShinyApple /usr/local/bin/ShinyApple

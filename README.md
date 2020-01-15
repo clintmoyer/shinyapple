@@ -14,6 +14,12 @@ Cleanup your MacOS system
 $ make
 ```
 
+## Install
+
+```
+$ make install
+```
+
 ## Limitations
 
 *  requires Xcode to build third-party dependencies

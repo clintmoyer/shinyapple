@@ -23,10 +23,10 @@ import PackageDescription
 let package = Package(
     name: "ShinyApple",
 	platforms: [
-	.macOS(.v10_13)
+		.macOS(.v10_13)
     ],
 	targets: [
-	.target(
+		.target(
 			name: "ShinyApple"
 		),
     ]
