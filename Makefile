@@ -15,4 +15,4 @@
 # You should have received a copy of the GNU General Public License
 # along with ShinyApple.  If not, see <https://www.gnu.org/licenses/>.
 build:
-	swiftc *.swift -o shinyapple
+	swift build
