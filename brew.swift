@@ -16,14 +16,34 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with ShinyApple.  If not, see <https://www.gnu.org/licenses/>.
 */
+import Foundation
 
-// docker
-checkDocker()
-let containers = getContainers()
-for container in containers {
-	removeContainer(container: container)
+
+let brewRuntime = "/usr/local/bin/brew"
+
+
+// warn us when Docker is not present
+func checkBrew() {
+	let fileManager = FileManager.default
+	if !fileManager.fileExists(atPath: brewRuntime) {
+		print("Missing Brew")
+		exit(1)
+	}
 }
 
-// brew
-brewCleanup()
+func brewCleanup() {
+	let task = Process()
+	let pipe = Pipe()
 
+	task.standardOutput = pipe
+	task.executableURL = URL(fileURLWithPath: brewRuntime)
+	task.arguments = ["cleanup"]
+
+	do {
+		try task.run()
+	} catch {
+	}
+
+	task.waitUntilExit()
+
+}
