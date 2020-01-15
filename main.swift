@@ -18,6 +18,7 @@ along with ShinyApple.  If not, see <https://www.gnu.org/licenses/>.
 */
 
 // docker
+print("Cleaning up Docker")
 checkDocker()
 let containers = getContainers()
 for container in containers {
@@ -25,5 +26,6 @@ for container in containers {
 }
 
 // brew
+print("Cleaning up Brew")
 brewCleanup()
 

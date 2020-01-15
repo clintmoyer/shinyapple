@@ -33,7 +33,6 @@ func checkBrew() {
 
 func brewCleanup() {
 	let task = Process()
-	let pipe = Pipe()
 
 	task.standardOutput = pipe
 	task.executableURL = URL(fileURLWithPath: brewRuntime)
