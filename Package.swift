@@ -1,3 +1,4 @@
+// swift-tools-version:5.1
 /*
 Copyright 2020 Clint Moyer
 
@@ -18,10 +19,11 @@ along with ShinyApple.  If not, see <https://www.gnu.org/licenses/>.
 */
 import PackageDescription
 
+
 let package = Package(
     name: "ShinyApple",
     dependencies: [
-        .package(url: "https://github.com/kylef/Commander.git"),
+        .package(url: "https://github.com/kylef/Commander.git", from: "0.9.1"),
     ],
     targets: [
         .target(
