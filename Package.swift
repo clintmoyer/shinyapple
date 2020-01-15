@@ -22,6 +22,9 @@ import PackageDescription
 
 let package = Package(
     name: "ShinyApple",
+	platforms: [
+        .macOS(.v10_13)
+    ],
     dependencies: [
         .package(url: "https://github.com/kylef/Commander.git", from: "0.9.1"),
     ],
