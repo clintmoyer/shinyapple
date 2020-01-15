@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import Foundation
 
 let dockerRuntime = "/usr/local/bin/docker"
-let dockerSocket = "/var/run/docker.sock"
 
 let fileManager = FileManager.default
 
@@ -26,15 +25,14 @@ if !fileManager.fileExists(atPath: dockerRuntime) {
 	exit(1)
 }
 
-if !fileManager.fileExists(atPath: dockerRuntime) {
-	print("Missing Docker socket")
-	exit(1)
-}
-
 let task = Process()
 
-task.launchPath = "/bin/ls"
-/*task.arguments = ["pwd"]*/
+// requires Mojave or newer TODO: handle older
+task.executableURL = URL(fileURLWithPath: dockerRuntime)
+task.arguments = ["ps", "-a", "-q"]
 
-task.launch()
+do {
+	try task.run()
+} catch {
+}
 
