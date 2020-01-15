@@ -11,7 +11,7 @@ Cleanup your MacOS system
 ## Building
 
 ```
-$ swiftc *.swift -o shinyapple
+$ make
 ```
 
 ## Limitations
