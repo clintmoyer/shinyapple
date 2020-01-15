@@ -16,20 +16,20 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with ShinyApple.  If not, see <https://www.gnu.org/licenses/>.
 */
+import Foundation
 
-// docker
-print("Cleaning up Docker")
-checkDocker()
-let containers = getContainers()
-for container in containers {
-	removeContainer(container: container)
+
+// use MacOS purge tool
+func purgeMemory() {
+	let task = Process()
+
+	task.executableURL = URL(fileURLWithPath: "/usr/sbin/purge")
+
+	do {
+		try task.run()
+	} catch {
+	}
+
+	task.waitUntilExit()
 }
-
-// brew
-print("Cleaning up Brew")
-brewCleanup()
-
-// cleanup memory
-print("Cleaning up memory")
-purgeMemory()
 
