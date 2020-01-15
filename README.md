@@ -2,6 +2,12 @@
 
 Cleanup your MacOS system
 
+## Actions
+
+*  `` docker rm `docker ps -aq` ``
+*  `brew cleanup`
+*  `purge` (MacOS memory tool)
+
 ## Building
 
 ```

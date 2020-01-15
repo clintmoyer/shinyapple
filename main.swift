@@ -23,7 +23,7 @@ dockerCleanup()
 
 // brew
 print("Cleaning up Brew")
-/*brewCleanup()*/
+brewCleanup()
 
 // cleanup memory
 print("Cleaning up memory")
