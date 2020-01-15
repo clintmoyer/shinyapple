@@ -18,8 +18,11 @@ along with ShinyApple.  If not, see <https://www.gnu.org/licenses/>.
 */
 import Foundation
 
+
 let dockerRuntime = "/usr/local/bin/docker"
 
+
+// warn us when Docker is not present
 func checkDocker() {
 	let fileManager = FileManager.default
 	if !fileManager.fileExists(atPath: dockerRuntime) {
@@ -27,6 +30,7 @@ func checkDocker() {
 		exit(1)
 	}
 }
+
 
 // docker ps -aq
 func getContainers() -> Array<String.SubSequence> {
@@ -51,6 +55,7 @@ func getContainers() -> Array<String.SubSequence> {
 	return containers
 }
 
+
 // docker rm <container>
 //
 // typically this clears data from /var/lib/docker/containers/
@@ -60,12 +65,15 @@ func getContainers() -> Array<String.SubSequence> {
 // ultimately this reduces the footprint of the Docker Machine
 func removeContainer(container: String.SubSequence) {
 	let task = Process()
+
 	task.executableURL = URL(fileURLWithPath: dockerRuntime)
 	task.arguments = ["rm", String(container)]
+
 	do {
 		try task.run()
 	} catch {
 	}
+
 	task.waitUntilExit()
 }
 
