@@ -25,37 +25,38 @@ if !fileManager.fileExists(atPath: dockerRuntime) {
 	exit(1)
 }
 
-var task = Process()
-let pipe = Pipe()
+// docker ps -aq
+func getContainers() -> Array<String.SubSequence> {
+	let task = Process()
+	let pipe = Pipe()
 
-// requires Mojave or newer TODO: handle older
-task.standardOutput = pipe
-task.executableURL = URL(fileURLWithPath: dockerRuntime)
-task.arguments = ["ps", "-a", "-q"]
+	task.standardOutput = pipe
+	task.executableURL = URL(fileURLWithPath: dockerRuntime)
+	task.arguments = ["ps", "-a", "-q"]
 
-do {
-	// requires Mojave or newer TODO: handle older
-	try task.run()
-} catch {
+	do {
+		try task.run()
+	} catch {
+	}
+
+	task.waitUntilExit()
+
+	let data = pipe.fileHandleForReading.readDataToEndOfFile()
+	let output = String(data: data, encoding: String.Encoding.utf8)!
+	let containers = output.split { $0.isNewline }
+
+	return containers
 }
 
-task.waitUntilExit()
-
-// parse output to get array of containers
-let data = pipe.fileHandleForReading.readDataToEndOfFile()
-let output = String(data: data, encoding: String.Encoding.utf8)!
-let lines = output.split { $0.isNewline }
-
-// remove each container
+// docker rm <container>
 //
 // typically this clears data from /var/lib/docker/containers/
 // MacOS kernel cannot run Docker natively, instead using a VM
 // under $HOME/Library/Containers/com.docker.docker/Data
 //
 // ultimately this reduces the footprint of the Docker Machine
-
-for container in lines {
-	task = Process()
+func removeContainer(container: String.SubSequence) {
+	let task = Process()
 	task.executableURL = URL(fileURLWithPath: dockerRuntime)
 	task.arguments = ["rm", String(container)]
 	do {
@@ -63,5 +64,10 @@ for container in lines {
 	} catch {
 	}
 	task.waitUntilExit()
+}
+
+let containers = getContainers()
+for container in containers {
+	removeContainer(container: container)
 }
 
