@@ -25,14 +25,35 @@ if !fileManager.fileExists(atPath: dockerRuntime) {
 	exit(1)
 }
 
-let task = Process()
+var task = Process()
+let pipe = Pipe()
 
 // requires Mojave or newer TODO: handle older
+task.standardOutput = pipe
 task.executableURL = URL(fileURLWithPath: dockerRuntime)
 task.arguments = ["ps", "-a", "-q"]
 
 do {
+	// requires Mojave or newer TODO: handle older
 	try task.run()
 } catch {
+}
+
+task.waitUntilExit()
+
+// parse output to get array of containers
+let data = pipe.fileHandleForReading.readDataToEndOfFile()
+let output = String(data: data, encoding: String.Encoding.utf8)!
+let lines = output.split { $0.isNewline }
+
+for container in lines {
+	print(container)
+	task = Process()
+	task.arguments = ["rm", String(container)]
+	do {
+		try task.run()
+	} catch {
+	}
+	task.waitUntilExit()
 }
 
